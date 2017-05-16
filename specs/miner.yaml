@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    labels:
+        name: geth-miner
+    name: geth-miner
+spec:
+    replicas: 1
+    selector:
+        name: geth-miner
+    template:
+        metadata:
+            labels:
+                name: geth-miner
+        spec:
+            containers:
+                - name: geth-miner
+                  image: 192.168.64.5/geth:latest
+                  command:
+                      - "/geth"
+                      - "--port"
+                      - "31303"
+                      - "--identity"
+                      - "\"boxchain\""
+                      - "--mine"
+                      - "--minerthreads"
+                      - "1"
+                      - "--nodiscover"
+                      - "--etherbase"
+                      - "0x40bb71044aace09bff54f57b1fdf72c75dd21138"
+                      - "--rpc"
+                      - "--rpcport"
+                      - "8180"
+                      - "--rpccorsdomain"
+                      - "\"*\""
+                      - "--autodag"
+                      - "--networkid"
+                      - "1992"
+                      - "--nat"
+                      - "any"
+                  ports:
+                    - containerPort: 8180                  
+                    - containerPort: 31303
+                  resources:
+                    limits:
+                      cpu: "1"
+
+    

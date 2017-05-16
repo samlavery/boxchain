@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    labels:
+        name: geth-node
+    name: geth-node
+spec:
+    replicas: 1
+    selector:
+        name: geth-node
+    template:
+        metadata:
+            labels:
+                name: geth-node
+        spec:
+            containers:
+                - name: geth-node
+                  image: 192.168.64.5/geth:latest
+                  command:
+                      - "/geth"
+                      - "--dev"
+                      - "--identity"
+                      - "\"boxchain\""
+                      - "--nodiscover"
+                      - "--ipcpath"
+                      - "\"geth.ipc\""
+                      - "--etherbase"
+                      - "0x40bb71044aace09bff54f57b1fdf72c75dd21138"
+                      - "--rpc"
+                      - "--rpcport"
+                      - "8088"
+                      - "--rpccorsdomain"
+                      - "\"*\""
+                      - "--port"
+                      - "30304"
+                      - "--autodag"
+                      - "--networkid"
+                      - "1992"
+                      - "--nat"
+                      - "any"
+                  ports:
+                    - containerPort: 8088
+                    - containerPort: 30304
+                  resources:
+                    limits:
+                      cpu: "0.25"
+
